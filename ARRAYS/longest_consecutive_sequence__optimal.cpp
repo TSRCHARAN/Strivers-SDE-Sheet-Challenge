@@ -1,31 +1,27 @@
 #include <bits/stdc++.h>
 
-int lengthOfLongestConsecutiveSequence(vector<int> &nums, int n)
+int lengthOfLongestConsecutiveSequence(vector<int>&a, int n)
 {
-    set < int > hashSet;
-    for (int num: nums)
+    if(n==0) return 0;
+    int longest = 1;
+    unordered_set<int>st;
+    for(int i=0; i<n; i++)
     {
-        hashSet.insert(num);
+        st.insert(a[i]);
     }
-
-    int longestStreak = 0;
-
-    for (int num: nums)
+    for(auto it: st)
     {
-        if (!hashSet.count(num - 1))
+        if(st.find(it-1)==st.end())
         {
-            int currentNum = num;
-            int currentStreak = 1;
-
-            while (hashSet.count(currentNum + 1))
+            int cnt = 1;
+            int x = it;
+            while(st.find(x+1)!=st.end())
             {
-                currentNum += 1;
-                currentStreak += 1;
+                x++;
+                cnt++;
             }
-
-            longestStreak = max(longestStreak, currentStreak);
+            longest = max(longest,cnt);
         }
     }
-
-    return longestStreak;
+    return longest;
 }
